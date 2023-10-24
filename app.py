@@ -1,6 +1,5 @@
 import streamlit as st
 import random
-import pyperclip
 import string
 
 st.set_page_config(
@@ -25,33 +24,24 @@ with checkbox_row[3]: is_symbol = st.checkbox('Symbols', value=True)
 
 st.divider()
 
-if 'copy' not in st.session_state or st.session_state['copy'] == False:
-    password = ''
-    if(is_lowercase or is_uppercase or is_number or is_symbol):
-        while len(password) <= password_length:
-            aleatorio = random.randint(0, 3)
-            if aleatorio == 0:
-                if(is_lowercase):
-                    password += random.choice(string.ascii_lowercase)
-            elif aleatorio == 1:
-                if(is_uppercase):
-                    password += random.choice(string.ascii_uppercase)
-            elif aleatorio == 2:
-                if(is_number):
-                    password += random.choice(string.digits)
-            else:
-                if(is_symbol):
-                    password += random.choice(string.punctuation)
-    else:
-        password = 'Choose at least one option'
+password = ''
+if(is_lowercase or is_uppercase or is_number or is_symbol):
+    while len(password) <= password_length:
+        aleatorio = random.randint(0, 3)
+        if aleatorio == 0:
+            if(is_lowercase):
+                password += random.choice(string.ascii_lowercase)
+        elif aleatorio == 1:
+            if(is_uppercase):
+                password += random.choice(string.ascii_uppercase)
+        elif aleatorio == 2:
+            if(is_number):
+                password += random.choice(string.digits)
+        else:
+            if(is_symbol):
+                password += random.choice(string.punctuation)
 else:
-    password = st.session_state['password']
-    st.session_state['copy'] = False
+    password = 'Choose at least one option'
 
 
-st.text(password)
-
-if st.button('Copy'):
-    pyperclip.copy(password)
-    st.session_state['copy'] = True
-    st.session_state['password'] = password
+st.code(password, 'http')
